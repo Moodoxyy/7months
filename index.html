@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7 Months of Us ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fdf2f8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            padding: 2rem;
+            color: #db2777;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hearts {
+            font-size: 1.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 90%;
+            margin: 1rem;
+            position: relative;
+        }
+
+        .slide {
+            text-align: center;
+            display: none;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .caption {
+            font-style: italic;
+            color: #666;
+            margin: 1rem 0;
+        }
+
+        .nav-button {
+            background: #fdf2f8;
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 50%;
+            font-size: 1.5rem;
+        }
+
+        .nav-button:hover {
+            background: #fbcfe8;
+        }
+
+        .prev {
+            left: 1rem;
+        }
+
+        .next {
+            right: 1rem;
+        }
+
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #fbcfe8;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: #db2777;
+        }
+
+        .message {
+            text-align: center;
+            padding: 2rem;
+            color: #4b5563;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            z-index: 1000;
+            border: 2px solid #db2777;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .music-control:hover {
+            background: #fdf2f8;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">An Apology From My Side</div>
+        <div class="hearts">❤️ 7 Months ❤️</div>
+    </div>
+
+    <div class="container">
+        <button class="nav-button prev" onclick="changeSlide(-1)">←</button>
+        <button class="nav-button next" onclick="changeSlide(1)">→</button>
+
+        <div class="slide active">
+            <h2>I'm Sorry...</h2>
+            <p>Chahat please forgive me :(</p>
+            <img src="images/sorry.jpeg" alt="Cute cat">
+            <p class="caption">Me right now, trying to make it up to you...</p>
+        </div>
+
+        <div class="slide">
+            <h2>When I realized I messed up...</h2>
+            <p>My face when I knew I made you sad:</p>
+            <img src="images/messed.jpeg" alt="Sad cat">
+            <p class="caption">This cat represents my genuine feelings!</p>
+        </div>
+
+        <div class="slide">
+            <h2>But then I remembered...</h2>
+            <p>It's our 7 Month Anniversary! 🎉</p>
+            <img src="images/7.jpeg" alt="Happy cat">
+            <p class="caption">Time flies when I'm with you!</p>
+        </div>
+
+        <div class="slide">
+            <h2>These 7 months have been...</h2>
+            <p>The most pawsome months of my life!</p>
+            <img src="images/playful.jpeg" alt="Playful cat">
+            <p class="caption">Get it? Paw-some? 😸</p>
+        </div>
+
+        <div class="slide">
+            <h2>So please forgive me...</h2>
+            <p>Because you mean the world to me!</p>
+            <img src="images/last.jpeg" alt="Loving cat">
+            <p class="caption">Look at this face... how can you resist?</p>
+        </div>
+
+        <div class="dots"></div>
+    </div>
+    <audio id="bgMusic" loop>
+        <source src="song/song.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <div class="music-control" onclick="toggleMusic()">
+        🎵
+    </div>
+    <div class="message">
+        I know I messed up, but these past 7 months have been incredible.
+        You make every day better just by being you. 
+        I promise to keep making you smile and being the best partner I can be! ❤️
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dotsContainer = document.querySelector('.dots');
+
+        // Create dots
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dot.onclick = () => goToSlide(index);
+            dotsContainer.appendChild(dot);
+        });
+
+        function changeSlide(direction) {
+            goToSlide(currentSlide + direction);
+        }
+
+        function goToSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            document.querySelectorAll('.dot')[currentSlide].classList.remove('active');
+            
+            currentSlide = (n + slides.length) % slides.length;
+            
+            slides[currentSlide].classList.add('active');
+            document.querySelectorAll('.dot')[currentSlide].classList.add('active');
+        }
+        const audio = document.getElementById('bgMusic');
+let isMusicPlaying = false;
+
+function toggleMusic() {
+    if (isMusicPlaying) {
+        audio.pause();
+        document.querySelector('.music-control').textContent = '🎵';
+    } else {
+        audio.play();
+        document.querySelector('.music-control').textContent = '⏸️';
+    }
+    isMusicPlaying = !isMusicPlaying;
+}
+
+// Start music when page is interacted with
+document.body.addEventListener('click', function() {
+    if (!isMusicPlaying) {
+        toggleMusic();
+    }
+}, { once: true });
+    </script>
+</body>
+</html>
